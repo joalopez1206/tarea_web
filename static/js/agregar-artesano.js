@@ -514,6 +514,7 @@ const validate_phone = (phone) => {
 }
 
 const validate_form = () => {
+    let myform = document.forms["reg-artesano"];
     let name = document.getElementById("nombre").value;
     let mail = document.getElementById("myemail").value;
     let region = document.getElementById("region").value;
@@ -580,16 +581,7 @@ const validate_form = () => {
         validation_box.hidden = true;
         if (confirm("¿Confirma el registro de este artesano?")){
             //aqui usaria un myform.submit pero como es estatico solo redirecionare al index
-            let msg = document.getElementById("msg-ready")
-            msg.hidden = false;
-            let msg_text = document.createElement("h2")
-            msg_text.innerText = "Hemos recibido el registro del artesano. Muchas gracias. Espere un momento para ir al menu."
-            msg.append(msg_text)
-            scrollBy(0,200)
-            setTimeout(() => {
-                window.location.href = "index.html"
-            }, 3500);
-
+            myform.submit();
         }else{
             return;
         }

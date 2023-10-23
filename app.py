@@ -12,6 +12,15 @@ def agregar_artesano():
     if request.method == "GET":
         return render_template("agregar-artesano.html")
     elif request.method == "POST":
+        data = request.form
+        artesania_values = data.getlist('artesania[]')
+        nombre = data["nombre"]
+        email = data["myemail"]
+        number = data["mynumber"]
+        comentarios = data["comentarios"]
+        region = data["region"]
+        comuna = data["comuna"]
+        
         return "<p>NO PASA NA</p>"
     
 
