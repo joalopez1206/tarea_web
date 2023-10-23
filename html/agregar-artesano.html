@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/artesano.css">
+    <title>Registro artesanos</title>
+</head>
+<body>
+    <div class="container" id ="val-box" hidden>
+        <h2 id="val-msg"></h2>
+        <ul id="val-list"></ul>
+    </div>
+
+    <div class="container">
+        <form class="formulario" method= "post" enctype="multipart/form-data" id="reg-artesano">
+
+            <div id = "region-menu" class="input_usuario">
+                    
+                <label for="region">Elige tu region de participacion</label> <br>
+                
+                <select name="region" id="region">
+                    <script>
+                        let arr = ["","Arica y Parinacota", "Tarapacá", "Antofagasta", "Atacama", "Coquimbo",
+                        "Valparaíso", "Región del Libertador Gral. Bernardo O’Higgins", "Región del Maule",
+                        "Región del Biobío","Región de la Araucanía", "Región de Los Ríos", "Región de Los Lagos",
+                        "Región Aisén del Gral. Carlos Ibáñez del Campo", "Región de Magallanes y de la AntárVca Chilena",
+                        "Región Metropolitana de Santiago"]
+                        arr.forEach(element => {
+                            document.write("<option value='"+element+"'>"+element+"</option>");
+                        });
+                    </script>
+                </select>
+            
+            </div>
+
+            <div id = "comuna-menu" class="input_usuario">
+                
+                <label for="comuna">Comuna donde resides.</label> <br>
+                
+                <select name="comuna" id="comuna"></select>
+            </div>
+
+
+            <div class="multiselect">
+                Seleccionar artesanias que elabora:
+                <div class="selectBox" onclick="showCheckboxes()">
+                    <select>
+                    <option>Seleccione una artesania</option>
+                    </select>
+                    <div class="overSelect"></div>
+                </div>
+                <div id="checkboxes">
+                    <script>
+                        let artearr = ["mármol", "madera", "cerámica", "mimbre", "metal", "cuero", "telas", "joyas", "otro tipo"];
+                        for (arte of artearr) {
+                            document.write("<label for='"+arte+"'><input type='checkbox' name=artesania[] id='"+arte+"' value='"+arte+"'/>"+arte+"</label>");
+                        }
+                    </script>
+                </div>
+            </div>
+
+            <div id="comentarios-menu" class="input_usuario">
+                <label for="comentarios">Comentarios de sus artesanias (opcional)</label> <br>
+                
+                <textarea id="comentarios" name="comentarios" rows="4" cols="50"></textarea>
+            </div>
+
+            <div id="files-menu" class="input_usuario">
+                <label for="files">Subir fotos de tus artesanias</label> <br>
+                <input type="file" name="files[]" id="files" multiple>
+            </div>
+
+            <div id="nombre-menu" class="input_usuario">
+                    
+                <label for="nombre">Tu nombre</label> <br>
+
+                <input type="text" id="nombre" name="nombre" minlength="3" required>
+
+            </div>
+
+            <div id="mail-menu" class="input_usuario"> 
+
+                <label for="myemail">Tu email</label> <br>
+
+                <input type="email" id="myemail" name="myemail" required>
+            </div>
+
+            <div id ="number-menu" class="input_usuario">
+                <label for="mynumber">Tu numero (opcional)</label> <br>
+                <input type="text" name="mynumber" id="mynumber">
+            </div>
+            <div class="botones">
+                <button type="button" id="enviar">
+                    Registrar artesano
+                </button>
+            </div>
+        </form>
+    </div>
+    <div id="msg-ready" class="container" hidden></div>
+    <script src="../js/agregar-artesano.js"></script>
+</body>
+</html>

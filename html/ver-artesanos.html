@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/ver-hincha.css">
+    <title>Lista de artesanos</title>
+</head>
+<body>
+    <a href="index.html"><button id="backbutton">Volver a menu</button></a>
+    <h1>Tabla de artesanos registrados</h1>
+    <table style="width:100%;">
+        <tr>
+            <th>Nombre</th>
+            <th>Telefono</th>
+            <th>Comuna</th>
+            <th>Tipo artesanias</th>
+            <th>Fotos</th>
+        </tr>
+        <script>
+            let artesanos = [
+                {"nombre":"pedro",    "comuna":"la serena", "artesanias":["cuero","telas","mimbre"],
+                 "fotos":["art1_1-120.jpg"], "Numero":"1232456677"},
+
+                {"nombre":"juan",     "comuna":"coquimbo",  "artesanias":["cuero","telas","mimbre"],
+                 "fotos":["art2_1-120.jpg"], "Numero":"1230102317"},
+
+                {"nombre":"diego",    "comuna":"Maipu",     "artesanias":["cuero","telas","mimbre"],
+                 "fotos":["art3_1-120.jpg"], "Numero":"1291293912"},
+
+                {"nombre":"pablo",    "comuna":"paihuano",  "artesanias":["cuero","telas","mimbre"],
+                 "fotos":["art4_1-120.jpg"], "Numero":"0012389277"},
+
+                {"nombre":"gilberto", "comuna":"ovalle",    "artesanias":["cuero","telas","mimbre"],
+                 "fotos":["art5_1-120.jpg"], "Numero":"9912838123"},
+        ]
+            for(const artesano of artesanos){
+                document.write("<tr>");
+                document.write("<td><a href='informacion-artesanos.html'>"+artesano.nombre+"</a></td>");
+                document.write("<td>"+artesano.Numero+"</td>");
+                document.write("<td>"+artesano.comuna+"</td>");
+                document.write("<td>"+artesano.artesanias+"</td>");
+                let full_foto = artesano.fotos[0].split("-")[0]+".jpg";
+                document.write("<td> <a href=../static/"+ full_foto + " ><img src=../static/"+artesano.fotos[0]+
+                    " alt='foto del artesano "+ artesano.nombre+ "'></a> </td>");
+                document.write("</tr>");
+            }
+        </script>
+    </table>
+</body>
+</html>

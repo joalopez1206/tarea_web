@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/ver-hincha.css">
+    <title>Lista de Hinchas</title>
+</head>
+<body>
+    <a href="index.html"><button id="backbutton">Volver a menu</button></a>
+    <h1>Tabla de hinchas registrados</h1>
+    <table style="width:100%;">
+        <tr>
+            <th>Nombre</th>
+            <th>Comuna</th>
+            <th>Deportes</th>
+            <th>Modo Transporte</th>
+            <th>Numero celular</th>
+        </tr>
+        <script>
+            let hinchas = [
+                {"nombre":"pedro", "comuna":"la serena", "deportes":["basquet","bici","futbol"], "transporte":["privado"], "Numero":"1232456677"},
+                {"nombre":"juan", "comuna":"coquimbo", "deportes":["basquet","bici","futbol"], "transporte":["publico"], "Numero":"1230102317"},
+                {"nombre":"diego", "comuna":"Maipu", "deportes":["basquet","bici","futbol"], "transporte":["privado"], "Numero":"1291293912"},
+                {"nombre":"pablo", "comuna":"paihuano", "deportes":["basquet","bici","futbol"], "transporte":["publico"], "Numero":"0012389277"},
+                {"nombre":"gilberto", "comuna":"ovalle", "deportes":["basquet","bici","futbol"], "transporte":["privado"], "Numero":"9912838123"},
+        ]
+            for(const hincha of hinchas){
+                document.write("<tr>");
+                document.write("<td><a href='informacion-hincha.html'>"+hincha.nombre+"</a></td>");
+                document.write("<td>"+hincha.comuna+"</td>");
+                document.write("<td>"+hincha.deportes+"</td>");
+                document.write("<td>"+hincha.transporte+"</td>");
+                document.write("<td>"+hincha.Numero+"</td>");
+                document.write("</tr>");
+            }
+        </script>
+    </table>
+</body>
+</html>

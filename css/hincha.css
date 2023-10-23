@@ -1,0 +1,75 @@
+:root {
+    --color-borde: #dbdbdb
+}
+
+.container {
+    border: 1px solid var(--color-borde);
+    height: 50%;
+    max-width: 350px;
+    margin: 2% auto;
+    padding: 2rem;
+    padding-top: .5rem;
+    background-color: beige;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.input_usuario {
+    display: flex;
+    flex-direction: column;
+}
+
+.botones {
+    display: flex;
+    justify-content: center;
+}
+
+#enviar {
+    background-color: plum;
+    border: none;
+    border-radius: 8px;
+    color: black;
+    font-size: 15px;
+    padding: 2% 5%;
+    width: 40%;
+    cursor: pointer;
+}
+
+
+.multiselect {
+    width: 200px;
+  }
+  
+  .selectBox {
+    position: relative;
+  }
+  
+  .selectBox select {
+    width: 100%;
+    font-weight: bold;
+  }
+  
+  .overSelect {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+  
+  #checkboxes {
+    display: none;
+    border: 1px #dadada solid;
+  }
+  
+  #checkboxes label {
+    display: block;
+  }
+  
+  #checkboxes label:hover {
+    background-color: #1e90ff;
+  }
