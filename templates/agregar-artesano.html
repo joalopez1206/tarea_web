@@ -50,7 +50,7 @@ href="{{ url_for('static', filename='css/artesano.css')}}">
                 </div>
                 <div id="checkboxes">
                     <script>
-                        let artearr = ["mármol", "madera", "cerámica", "mimbre", "metal", "cuero", "telas", "joyas", "otro tipo"];
+                        let artearr = ["mármol", "madera", "cerámica", "mimbre", "metal", "cuero", "telas", "joyas", "otro"];
                         for (arte of artearr) {
                             document.write("<label for='"+arte+"'><input type='checkbox' name=artesania[] id='"+arte+"' value='"+arte+"'/>"+arte+"</label>");
                         }
@@ -88,7 +88,7 @@ href="{{ url_for('static', filename='css/artesano.css')}}">
                 <label for="mynumber">Tu numero (opcional)</label> <br>
                 <input type="text" name="mynumber" id="mynumber">
             </div>
-            
+
             <div class="botones">
                 <button type="button" id="enviar">
                     Registrar artesano

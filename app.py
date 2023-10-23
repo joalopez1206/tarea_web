@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
-from utils.validations import validate_entry_artesano
+from utils.validations import validate_entry_artesano#, validate_files_artesano
+#from database import db
 from utils.artesano import Artesano
 app = Flask(__name__)
 
@@ -22,11 +23,15 @@ def agregar_artesano():
         comentarios = data["comentarios"]
         region = data["region"]
         comuna = data["comuna"]
+
         entry_artesano = Artesano(name=nombre, mail=email, numero=number,
                                    comentario=comentarios, region=region,
                                    comuna=comuna, artesanias=artesania_values)
-        if validate_entry_artesano(entry_artesano):
+        print(data["mynumber"], type(number))
+        #files_artesano = request.files
+        if validate_entry_artesano(entry_artesano): #and validate_files_artesano():
             ...
+            #db.insert_artesano(entry_artesano)
         else:
             error = "Error en la validacion de los datos."
         return "<p>NO PASA NA</p>"
