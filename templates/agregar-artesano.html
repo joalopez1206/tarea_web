@@ -1,12 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/artesano.css">
-    <title>Registro artesanos</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}Menu principal{% endblock %}
+
+{% block css %} 
+<link rel="stylesheet" 
+type="text/css" 
+href="{{ url_for('static', filename='css/artesano.css')}}">
+{% endblock %}
+
+{% block content %}
     <div class="container" id ="val-box" hidden>
         <h2 id="val-msg"></h2>
         <ul id="val-list"></ul>
@@ -98,6 +100,7 @@
         </form>
     </div>
     <div id="msg-ready" class="container" hidden></div>
-    <script src="../js/agregar-artesano.js"></script>
-</body>
-</html>
+{% endblock %}
+{% block javascript %}
+<script src="{{url_for('static', filename='js/agregar-hincha2.js')}}"></script>
+{% endblock %}
