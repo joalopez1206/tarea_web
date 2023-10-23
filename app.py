@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 app = Flask(__name__)
 
 @app.route("/")
-def hello_world():
+def menu():
     return render_template("index.html")
 
 @app.route("/agregar_artesano",methods=["GET", "POST"])
@@ -35,6 +35,8 @@ def ver_hinchas():
         return render_template("ver-hinchas.html")
     elif request.method == "POST":
         return "<p>NO PASA NA</p>"
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

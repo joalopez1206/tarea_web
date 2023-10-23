@@ -1,111 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="../css/hincha.css">
-        <title>Registro Hincha</title>
-    </head>
-    <body>
-        <div class="container" id ="val-box" hidden>
-            <h2 id="val-msg"></h2>
-            <ul id="val-list"></ul>
-        </div>
-        <div class="container">
-            <form class="formulario" method= "post" enctype="multipart/form-data" id="reg-hincha">
+{% extends 'base.html' %}
 
-                <div class="multiselect">
-                    Seleccionar deportes de interes:
-                    <div class="selectBox" onclick="showCheckboxes()">
-                      <select>
-                        <option>Seleccione un deporte</option>
-                      </select>
-                      <div class="overSelect"></div>
-                    </div>
-                    <div id="checkboxes">
-                        <script>
-                            let sportsArray = ["Clavados","Natación","Natación artística","Polo acuático","Natación en Aguas abiertas","Maratón","Marcha","Atletismo","Bádminton","Balonmano","Básquetbol","Básquetbol 3x3","Béisbol","Boxeo","Bowling","Breaking","Canotaje Slalom","Canotaje de velocidad","BMX Freestyle","BMX Racing","Mountain Bike","Ciclismo pista","Ciclismo ruta","Adiestramiento ecuestre","Evento completo ecuestre","Salto ecuestre","Escalada deportiva","Esgrima","Esquí acuático y Wakeboard","Fútbol","Gimnasia artística Masculina","Gimnasia artística Femenina","Gimnasia rítmica","Gimnasia trampolín","Golf","Hockey césped","Judo","Karate","Levantamiento de pesas","Lucha","Patinaje artístico","Skateboarding","Patinaje velocidad","Pelota vasca","Pentatlón moderno","Racquetball","Remo","Rugby 7","Sóftbol","Squash","Surf","Taekwondo","Tenis","Tenis de mesa","Tiro","Tiro con arco","Triatlón","Vela","Vóleibol","Vóleibol playa"];  
-                            for (sport of sportsArray) {
-                                document.write("<label for='"+sport+"'><input type='checkbox' name=deportes[] id='"+sport+"' value='"+sport+"'/>"+sport+"</label>");
-                            }
-                        </script>
-                    </div>
-                  </div>
+{% block title %}Registro Hincha{% endblock %}
 
-                <div id = "region-menu" class="input_usuario">
-                    
-                    <label for="region">Elige tu region de participacion</label> <br>
-                    
-                    <select name="region" id="region">
-                        <script>
-                            let arr = ["","Arica y Parinacota", "Tarapacá", "Antofagasta", "Atacama", "Coquimbo",
-                             "Valparaíso", "Región del Libertador Gral. Bernardo O’Higgins", "Región del Maule",
-                             "Región del Biobío","Región de la Araucanía", "Región de Los Ríos", "Región de Los Lagos",
-                             "Región Aisén del Gral. Carlos Ibáñez del Campo", "Región de Magallanes y de la AntárVca Chilena",
-                             "Región Metropolitana de Santiago"]
-                            arr.forEach(element => {
-                                document.write("<option value='"+element+"'>"+element+"</option>");
-                            });
-                        </script>
+{% block css %} 
+<link rel="stylesheet" 
+type="text/css" 
+href="{{ url_for('static', filename='css/hincha.css')}}">
+{% endblock %}
+
+{% block content %}
+    <div class="container" id ="val-box" hidden>
+        <h2 id="val-msg"></h2>
+        <ul id="val-list"></ul>
+    </div>
+    <div class="container">
+        <form class="formulario" method= "post" enctype="multipart/form-data" id="reg-hincha">
+
+            <div class="multiselect">
+                Seleccionar deportes de interes:
+                <div class="selectBox" onclick="showCheckboxes()">
+                    <select>
+                    <option>Seleccione un deporte</option>
                     </select>
+                    <div class="overSelect"></div>
+                </div>
+                <div id="checkboxes">
+                    <script>
+                        let sportsArray = ["Clavados","Natación","Natación artística","Polo acuático","Natación en Aguas abiertas","Maratón","Marcha","Atletismo","Bádminton","Balonmano","Básquetbol","Básquetbol 3x3","Béisbol","Boxeo","Bowling","Breaking","Canotaje Slalom","Canotaje de velocidad","BMX Freestyle","BMX Racing","Mountain Bike","Ciclismo pista","Ciclismo ruta","Adiestramiento ecuestre","Evento completo ecuestre","Salto ecuestre","Escalada deportiva","Esgrima","Esquí acuático y Wakeboard","Fútbol","Gimnasia artística Masculina","Gimnasia artística Femenina","Gimnasia rítmica","Gimnasia trampolín","Golf","Hockey césped","Judo","Karate","Levantamiento de pesas","Lucha","Patinaje artístico","Skateboarding","Patinaje velocidad","Pelota vasca","Pentatlón moderno","Racquetball","Remo","Rugby 7","Sóftbol","Squash","Surf","Taekwondo","Tenis","Tenis de mesa","Tiro","Tiro con arco","Triatlón","Vela","Vóleibol","Vóleibol playa"];  
+                        for (sport of sportsArray) {
+                            document.write("<label for='"+sport+"'><input type='checkbox' name=deportes[] id='"+sport+"' value='"+sport+"'/>"+sport+"</label>");
+                        }
+                    </script>
+                </div>
+                </div>
+
+            <div id = "region-menu" class="input_usuario">
                 
+                <label for="region">Elige tu region de participacion</label> <br>
+                
+                <select name="region" id="region">
+                    <script>
+                        let arr = ['Región de Tarapacá', 'Región de Antofagasta', 'Región de Atacama', 'Región de Coquimbo', 'Región de Valparaíso', 'Región del Libertador Bernardo Ohiggins', 'Región del Maule', 'Región del Biobío', 'Región de La Araucanía', 'Región de Los Lagos', 'Región Aisén del General Carlos Ibáñez del Campo', 'Región de Magallanes y la Antártica Chilena', 'Región Metropolitana de Santiago', 'Región de Los Ríos', 'Región Arica y Parinacota', 'Región del Ñuble']
+                        arr.forEach(element => {
+                            document.write("<option value='"+element+"'>"+element+"</option>");
+                        });
+                    </script>
+                </select>
+            
+            </div>
+
+            <div id = "comuna-menu" class="input_usuario">
+                
+                <label for="comuna">Comuna donde resides.</label> <br>
+                
+                <select name="comuna" id="comuna"></select>
+            </div>
+
+            <div id = "transporte-menu" class="input_usuario">
+
+                <label>Medio de transporte.</label> <br>
+
+                <div id="transport-checkbox">
+                    <input type="checkbox" name="transporte[]" id="privado" value="privado">
+                    <label for="privado">Privado</label> <br>
+                    <input type="checkbox" name="transporte[]" id="publico" value="publico">
+                    <label for="publico">Transporte publico</label> <br>
+                    <input type="checkbox" name="transporte[]" id="bicicleta" value="bicicleta">
+                    <label for="bicicleta">Bicicleta</label>
                 </div>
 
-                <div id = "comuna-menu" class="input_usuario">
-                    
-                    <label for="comuna">Comuna donde resides.</label> <br>
-                    
-                    <select name="comuna" id="comuna"></select>
-                </div>
+            </div>
 
-                <div id = "transporte-menu" class="input_usuario">
+            <div id="nombre-menu" class="input_usuario">
+                
+                <label for="nombre">Tu nombre</label> <br>
 
-                    <label>Medio de transporte.</label> <br>
+                <input type="text" id="nombre" name="nombre" minlength="3" required>
 
-                    <div id="transport-checkbox">
-                        <input type="checkbox" name="transporte[]" id="privado" value="privado">
-                        <label for="privado">Privado</label> <br>
-                        <input type="checkbox" name="transporte[]" id="publico" value="publico">
-                        <label for="publico">Transporte publico</label> <br>
-                        <input type="checkbox" name="transporte[]" id="bicicleta" value="bicicleta">
-                        <label for="bicicleta">Bicicleta</label>
-                    </div>
+            </div>
 
-                </div>
+            <div id="mail-menu" class="input_usuario"> 
 
-                <div id="nombre-menu" class="input_usuario">
-                    
-                    <label for="nombre">Tu nombre</label> <br>
+                <label for="myemail">Tu email</label> <br>
 
-                    <input type="text" id="nombre" name="nombre" minlength="3" required>
+                <input type="email" id="myemail" name="myemail" required>
+            </div>
 
-                </div>
+            <div id ="number-menu" class="input_usuario">
+                <label for="mynumber">Tu numero (opcional)</label> <br>
+                <input type="text" name="mynumber" id="mynumber">
+            </div>
 
-                <div id="mail-menu" class="input_usuario"> 
+            <div id="comentarios-menu" class="input_usuario">
+                <label for="comentarios">Comentarios (opcional)</label> <br>
+                
+                <textarea id="comentarios" name="comentarios" rows="3" cols="50"></textarea>
+            </div>
+            <div class="botones">
+                <button type="button" id="enviar">
+                    Registrar Hincha
+                </button>
+            </div>
+        </form>
+    </div>
+    <div id="msg-ready" class="container" hidden></div>
+{% endblock %}
 
-                    <label for="myemail">Tu email</label> <br>
-
-                    <input type="email" id="myemail" name="myemail" required>
-                </div>
-
-                <div id ="number-menu" class="input_usuario">
-                    <label for="mynumber">Tu numero (opcional)</label> <br>
-                    <input type="text" name="mynumber" id="mynumber">
-                </div>
-
-                <div id="comentarios-menu" class="input_usuario">
-                    <label for="comentarios">Comentarios (opcional)</label> <br>
-                    
-                    <textarea id="comentarios" name="comentarios" rows="3" cols="50"></textarea>
-                </div>
-                <div class="botones">
-                    <button type="button" id="enviar">
-                        Registrar Hincha
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div id="msg-ready" class="container" hidden></div>
-        <script src="../js/agregar-hincha2.js"></script>
-    </body>
-</html>
+{% block javascript %}
+<script src="{{url_for('static', filename='js/agregar-hincha2.js')}}"></script>
+{% endblock %}

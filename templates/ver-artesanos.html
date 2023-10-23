@@ -1,13 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/ver-hincha.css">
-    <title>Lista de artesanos</title>
-</head>
-<body>
-    <a href="index.html"><button id="backbutton">Volver a menu</button></a>
+{% extends 'base.html' %}
+
+{% block title %}Registro Artesano{% endblock %}
+
+{% block css %} 
+<link rel="stylesheet" 
+type="text/css" 
+href="{{ url_for('static', filename='css/ver_artesano.css')}}">
+{% endblock %}
+
+{% block content %}
+    <a href="{{ url_for('menu') }}"><button id="backbutton">Volver a menu</button></a>
     <h1>Tabla de artesanos registrados</h1>
     <table style="width:100%;">
         <tr>
@@ -36,7 +38,7 @@
         ]
             for(const artesano of artesanos){
                 document.write("<tr>");
-                document.write("<td><a href='informacion-artesanos.html'>"+artesano.nombre+"</a></td>");
+                document.write("<td><a href='url_for('informacion_artesanos')'>"+artesano.nombre+"</a></td>");
                 document.write("<td>"+artesano.Numero+"</td>");
                 document.write("<td>"+artesano.comuna+"</td>");
                 document.write("<td>"+artesano.artesanias+"</td>");
@@ -47,5 +49,4 @@
             }
         </script>
     </table>
-</body>
-</html>
+{% endblock %}
