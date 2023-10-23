@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
 from utils.validations import validate_entry_artesano#, validate_files_artesano
-#from database import db
+from database import db
 from utils.artesano import Artesano
 app = Flask(__name__)
 
@@ -13,7 +13,7 @@ def menu():
 def agregar_artesano():
     error = None
     if request.method == "GET":
-        return render_template("agregar-artesano.html")
+        return render_template("agregar-artesano.html", error=error)
     elif request.method == "POST":
         data = request.form
         artesania_values = data.getlist('artesania[]')
@@ -30,11 +30,13 @@ def agregar_artesano():
         print(data["mynumber"], type(number))
         #files_artesano = request.files
         if validate_entry_artesano(entry_artesano): #and validate_files_artesano():
-            ...
-            #db.insert_artesano(entry_artesano)
+            if db.insert_artesano(entry_artesano):
+                print("Todo OK")
+                return redirect(url_for("agregar_artesano", error=error))
+            error = "Error insertando a base de datos, verifique que cumpla!"
         else:
-            error = "Error en la validacion de los datos."
-        return "<p>NO PASA NA</p>"
+            error = "Error en la validacion de los datos. Verifique que cumplen los requisitos"
+        return redirect(url_for("agregar_artesano", error=error))
     
 
 @app.route("/agregar_hincha",methods=["GET", "POST"])

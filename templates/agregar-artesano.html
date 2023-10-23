@@ -97,6 +97,10 @@ href="{{ url_for('static', filename='css/artesano.css')}}">
         </form>
     </div>
     <div id="msg-ready" class="container" hidden></div>
+    {% if error %}
+        <p> {{error}}</p>
+    {% endif %}
+
 {% endblock %}
 {% block javascript %}
 <script src="{{url_for('static', filename='js/agregar-artesano.js')}}"></script>
