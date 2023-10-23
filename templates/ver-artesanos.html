@@ -19,34 +19,23 @@ href="{{ url_for('static', filename='css/ver_artesano.css')}}">
             <th>Tipo artesanias</th>
             <th>Fotos</th>
         </tr>
-        <script>
-            let artesanos = [
-                {"nombre":"pedro",    "comuna":"la serena", "artesanias":["cuero","telas","mimbre"],
-                 "fotos":["art1_1-120.jpg"], "Numero":"1232456677"},
-
-                {"nombre":"juan",     "comuna":"coquimbo",  "artesanias":["cuero","telas","mimbre"],
-                 "fotos":["art2_1-120.jpg"], "Numero":"1230102317"},
-
-                {"nombre":"diego",    "comuna":"Maipu",     "artesanias":["cuero","telas","mimbre"],
-                 "fotos":["art3_1-120.jpg"], "Numero":"1291293912"},
-
-                {"nombre":"pablo",    "comuna":"paihuano",  "artesanias":["cuero","telas","mimbre"],
-                 "fotos":["art4_1-120.jpg"], "Numero":"0012389277"},
-
-                {"nombre":"gilberto", "comuna":"ovalle",    "artesanias":["cuero","telas","mimbre"],
-                 "fotos":["art5_1-120.jpg"], "Numero":"9912838123"},
-        ]
-            for(const artesano of artesanos){
-                document.write("<tr>");
-                document.write("<td><a href='url_for('informacion_artesanos')'>"+artesano.nombre+"</a></td>");
-                document.write("<td>"+artesano.Numero+"</td>");
-                document.write("<td>"+artesano.comuna+"</td>");
-                document.write("<td>"+artesano.artesanias+"</td>");
-                let full_foto = artesano.fotos[0].split("-")[0]+".jpg";
-                document.write("<td> <a href=../static/"+ full_foto + " ><img src=../static/"+artesano.fotos[0]+
-                    " alt='foto del artesano "+ artesano.nombre+ "'></a> </td>");
-                document.write("</tr>");
-            }
-        </script>
+        {% if artesanos %}
+        {% for artesano in artesanos %}
+            <tr>
+                <td><a href="{{url_for('informacion_artesanos', artesano_id=artesano.artesano_id)}}">{{artesano.nombre}}</a></td>
+                <td>{{artesano.numero}}</td>
+                <td>{{artesano.nombre_comuna}}</td>
+                <td>
+                    <ul>
+                        {% for tipo in artesano.tipo_artesanias %}
+                        <li>{{tipo}}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+                <td><img src="" alt="foto de {{artesano.nombre}}"></td>
+            </tr>
+        {% endfor %}
+        {% endif %}
     </table>
+    <a href="{{ url_for('ver_artesanos', offset=offset+5)}}"><button id="backbutton">Siguientes 5 Artesanos</button></a>
 {% endblock %}

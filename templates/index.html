@@ -18,7 +18,7 @@ href="{{ url_for('static', filename='css/index.css')}}">
             <a href="{{ url_for('agregar_hincha') }}"><button type="button">Registrar Hincha</button></a><br>
         </div>
         <div class="botones">
-            <a href="{{ url_for('ver_artesanos') }}"><button type="button">Ver Artesanos</button></a><br>
+            <a href="{{ url_for('ver_artesanos', offset=0) }}"><button type="button">Ver Artesanos</button></a><br>
         </div>
         <div class="botones">
             <a href="{{ url_for('ver_hinchas') }}"><button type="button">Ver Hinchas</button></a>

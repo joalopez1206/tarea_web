@@ -53,4 +53,61 @@ def insert_artesano(artesano: Artesano):
 
     conn.commit()
     print("Insercion OK")
-    return True 
+    return True
+
+
+def get_artesanos(page_size=5, offset=0):
+    data = []
+    conn = get_conn()
+    cursor = conn.cursor()
+    QUERY = "SELECT artesano.id, comuna.nombre, descripcion_artesania, artesano.nombre, email, celular FROM artesano, comuna WHERE artesano.comuna_id=comuna.id ORDER BY id DESC LIMIT %s, %s"
+    
+    cursor.execute(QUERY, (offset,page_size))
+    artesanos = cursor.fetchall()
+
+    for artesano in artesanos:
+        artesano_id, nombre_comuna, descripcion_artesania, nombre_artesano, email, numero = artesano
+        QUERY = "SELECT TA.nombre FROM tipo_artesania TA, artesano_tipo AT WHERE AT.tipo_artesania_id=TA.id AND AT.artesano_id = %s"
+        cursor.execute(QUERY, (artesano_id,))
+        tipo_artesanias = list(cursor.fetchall())
+        tipo_artesanias = [x[0] for x in tipo_artesanias]
+        print(tipo_artesanias)
+        data.append({
+            "artesano_id": artesano_id,
+            "nombre_comuna": nombre_comuna,
+            "descripcion_artesania": descripcion_artesania,
+            "nombre" : nombre_artesano,
+            "email": email,
+            "numero": numero,
+            "tipo_artesanias": tipo_artesanias
+        })
+    return data
+
+#necesito: region, comuna , tipo_artesanias, comentarios, nombre, mail, numero
+def get_artesano_by_id(artesano_id):
+    conn = get_conn()
+    cursor = conn.cursor()
+    
+    QUERY = "SELECT comuna_id, comuna.nombre, descripcion_artesania, artesano.nombre, email, celular FROM artesano, comuna WHERE artesano.comuna_id=comuna.id AND artesano.id = %s" 
+    cursor.execute(QUERY, (artesano_id,))
+    comuna_id, comuna, comentario, nombre, mail, numero = cursor.fetchone()
+    
+    QUERY = "SELECT TA.nombre FROM tipo_artesania TA, artesano_tipo AT WHERE AT.tipo_artesania_id=TA.id AND AT.artesano_id = %s"
+    cursor.execute(QUERY, (artesano_id,))
+    tipo_artesanias = list(cursor.fetchall())
+    tipo_artesanias = [x[0] for x in tipo_artesanias]
+
+    QUERY = "SELECT region.nombre FROM region, comuna WHERE region.id = comuna.region_id AND comuna.id = %s"
+    cursor.execute(QUERY, (comuna_id,))
+    region_name, = cursor.fetchone()
+
+    data = {
+        "region":region_name,
+        "comuna":comuna,
+        "tipo_artesanias":tipo_artesanias,
+        "descripcion_artesania":comentario,
+        "nombre":nombre,
+        "mail":mail,
+        "numero":numero
+    }
+    return data

@@ -46,14 +46,19 @@ def agregar_hincha():
     elif request.method == "POST":
         return "<p>NO PASA NA</p>"
 
-@app.route("/ver_artesanos",methods=["GET", "POST"])
-def ver_artesanos():
+@app.route("/ver_artesanos/<int:offset>",methods=["GET"])
+def ver_artesanos(offset):
     if request.method == "GET":
-        return render_template("ver-artesanos.html")
-    elif request.method == "POST":
-        return "<p>NO PASA NA</p>"
+        data = db.get_artesanos(offset=offset)
+        return render_template("ver-artesanos.html", artesanos=data, offset=offset)
+    
+@app.route("/informacion_artesanos/<int:artesano_id>", methods=["GET"])
+def informacion_artesanos(artesano_id):
+    artesano = db.get_artesano_by_id(artesano_id)
+    return render_template("informacion-artesanos.html",artesano=artesano)
 
-@app.route("/ver_hinchas",methods=["GET", "POST"])
+
+@app.route("/ver_hinchas",methods=["GET"])
 def ver_hinchas():
     if request.method == "GET":
         return render_template("ver-hinchas.html")

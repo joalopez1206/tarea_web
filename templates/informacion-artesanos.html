@@ -1,39 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/artesano.css">  
-    <title>Registro artesanos</title>
-</head>
-<body>
-    <a href="ver-artesanos.html"><button id="backbutton">Volver a informacion</button></a>
+{% extends 'base.html' %}
+
+{% block title %}Informacion Artesano{% endblock %}
+
+{% block css %} 
+<link rel="stylesheet" 
+type="text/css" 
+href="{{ url_for('static', filename='css/artesano.css')}}">
+{% endblock %}
+
+{% block content %}
+    {% if artesano %}
+    <a href="{{url_for('ver_artesanos', offset=0)}}"><button id="backbutton">Volver a informacion</button></a>
 
     <div class="container" style="display: flex; flex-direction: column; gap: 15px;">
         
             <div id = "region-menu" class="input_usuario">
                     
                 La region de participacion es: <br>
-                Coquimbo
-            
+                {{artesano.region}}
             </div>
 
             <div id = "comuna-menu" class="input_usuario">
                 
                 La comuna donde reside es: <br>
-                la serena
+                {{artesano.comuna}}
             </div>
 
 
             <div id="artesanias-que-tiene" class="input_usuario">
                 Las artesanias que elaboran son: <br>
-                cuero,telas, mimbre
+                <ul>
+                    {% for tipo in artesano.tipo_artesanias %}
+                    <li>{{tipo}}</li>
+                    {% endfor %}
+                </ul>
             </div>
 
 
             <div id="comentarios-menu" class="input_usuario">
                 Comentarios extra: <br>
-                Desarrollo telas de pana
+                {{artesano.descripcion_artesania}}
             </div>
 
             <div id="files-menu" class="input_usuario">
@@ -44,18 +50,24 @@
 
             <div id="nombre-menu" class="input_usuario">
                Su nombre es: <br>
-               pedro
+               {{artesano.nombre}}
             </div>
 
             <div id="mail-menu" class="input_usuario"> 
                 Su correo es: <br>
-                pedro@xd.cl
+                {{artesano.mail}}
             </div>
 
             <div id ="number-menu" class="input_usuario">
+                {% if artesano.numero %}
                 Su numero de telefono es: <br>
-                9123456789
+                {{artesano.numero}}
+                {% else %}
+                No tiene numero de telefono <br>
+                {% endif %}
             </div>
     </div>
-</body>
-</html>
+    {% else %}
+    <p>Este artesano no esta registrado!</p>
+    {% endif %}
+{% endblock %}
