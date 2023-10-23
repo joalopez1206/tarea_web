@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
-
+from utils.validations import validate_entry_artesano
+from utils.artesano import Artesano
 app = Flask(__name__)
 
 @app.route("/")
@@ -9,6 +10,7 @@ def menu():
 
 @app.route("/agregar_artesano",methods=["GET", "POST"])
 def agregar_artesano():
+    error = None
     if request.method == "GET":
         return render_template("agregar-artesano.html")
     elif request.method == "POST":
@@ -20,7 +22,13 @@ def agregar_artesano():
         comentarios = data["comentarios"]
         region = data["region"]
         comuna = data["comuna"]
-        
+        entry_artesano = Artesano(name=nombre, mail=email, numero=number,
+                                   comentario=comentarios, region=region,
+                                   comuna=comuna, artesanias=artesania_values)
+        if validate_entry_artesano(entry_artesano):
+            ...
+        else:
+            error = "Error en la validacion de los datos."
         return "<p>NO PASA NA</p>"
     
 

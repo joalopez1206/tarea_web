@@ -1,0 +1,3 @@
+from utils.artesano import Artesano
+def validate_entry_artesano(val: Artesano):
+    ...
