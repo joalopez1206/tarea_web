@@ -38,3 +38,6 @@ python3 app.py
 
 ## Observaciones del codigo
 
+Las imagenes de guardan en la carpeta static! tambien lo que falta en el codigo es poder encoger las imagenes que se suben, para que se vean mejor en "ver-artesanos".
+
+Por el momento solo se han subido imagenes de baja calidad!
