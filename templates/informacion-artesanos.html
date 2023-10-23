@@ -44,8 +44,9 @@ href="{{ url_for('static', filename='css/artesano.css')}}">
 
             <div id="files-menu" class="input_usuario">
                 Las fotos de sus artesanias son: <br>
-                <a href="../static/art1_1-1280.jpg"><img src="../static/art1_1-640.jpg" width="640" height="480" alt="1"></a>
-                <a href="../static/art2_1-1280.jpg"><img src="../static/art2_1-640.jpg" width="640" height="480" alt="2"></a>
+                {% for imagen in artesano.imagenes %}
+                    <img src="{{imagen}}" alt="foto de {{artesano.nombre}}">
+                {% endfor %}
             </div>
 
             <div id="nombre-menu" class="input_usuario">

@@ -1,5 +1,10 @@
 import pymysql
 from utils.artesano import Artesano
+import filetype
+import hashlib
+from flask import url_for
+from werkzeug.utils import secure_filename
+import os
 
 DB_NAME = "tarea2"
 DB_USERNAME = "dbtarea2"
@@ -7,6 +12,8 @@ DB_PASSWORD = "dbtarea2"
 DB_HOST = "localhost"
 DB_PORT = 3306
 DB_CHARSET = "utf8"
+
+UPLOAD_FOLDER = 'static/uploads'
 
 def get_conn():
 	conn = pymysql.connect(
@@ -19,7 +26,7 @@ def get_conn():
 	)
 	return conn
 
-def insert_artesano(artesano: Artesano):
+def insert_artesano(artesano: Artesano, images):
     conn = get_conn()
     cursor = conn.cursor()
     # Primero obtengamos la id de la region
@@ -50,6 +57,25 @@ def insert_artesano(artesano: Artesano):
         
         QUERY = "INSERT INTO artesano_tipo (artesano_id, tipo_artesania_id) VALUES (%s,%s)"
         cursor.execute(QUERY, (artesano_id, tipo_art_id))
+    
+    ## Ahora insertaremos las imagenes, codigo extraido del aux
+
+    for image in images:
+        _filename = hashlib.sha256(
+            secure_filename(image.filename) # nombre del archivo
+            .encode("utf-8") # encodear a bytes
+            ).hexdigest()
+        _extension = filetype.guess(image).extension
+        
+        img_filename = f"{_filename}.{_extension}"
+        
+         # 2. save img as a file
+        ruta = os.path.join(UPLOAD_FOLDER, img_filename)
+        image.save(ruta)
+
+        # insertamos la imagen en la base de datos
+        QUERY = "INSERT INTO foto (ruta_archivo, nombre_archivo, artesano_id) VALUES (%s, %s, %s)"
+        cursor.execute(QUERY, (UPLOAD_FOLDER, img_filename, artesano_id))
 
     conn.commit()
     print("Insercion OK")
@@ -71,7 +97,12 @@ def get_artesanos(page_size=5, offset=0):
         cursor.execute(QUERY, (artesano_id,))
         tipo_artesanias = list(cursor.fetchall())
         tipo_artesanias = [x[0] for x in tipo_artesanias]
-        print(tipo_artesanias)
+        
+        QUERY = "SELECT ruta_archivo, nombre_archivo FROM foto WHERE artesano_id=%s"
+        cursor.execute(QUERY, (artesano_id,))
+        imagenes = cursor.fetchall()
+        imagenes = [f"uploads/{nombre}" for _,nombre in imagenes]
+        imagenes = [url_for('static', filename=img_filename) for img_filename in imagenes]
         data.append({
             "artesano_id": artesano_id,
             "nombre_comuna": nombre_comuna,
@@ -79,7 +110,8 @@ def get_artesanos(page_size=5, offset=0):
             "nombre" : nombre_artesano,
             "email": email,
             "numero": numero,
-            "tipo_artesanias": tipo_artesanias
+            "tipo_artesanias": tipo_artesanias,
+            "imagenes": imagenes
         })
     return data
 
@@ -101,6 +133,11 @@ def get_artesano_by_id(artesano_id):
     cursor.execute(QUERY, (comuna_id,))
     region_name, = cursor.fetchone()
 
+    QUERY = "SELECT ruta_archivo, nombre_archivo FROM foto WHERE artesano_id=%s"
+    cursor.execute(QUERY, (artesano_id,))
+    imagenes = cursor.fetchall()
+    imagenes = [f"uploads/{nombre}" for _,nombre in imagenes]
+    imagenes = [url_for('static', filename=img_filename) for img_filename in imagenes]
     data = {
         "region":region_name,
         "comuna":comuna,
@@ -108,6 +145,7 @@ def get_artesano_by_id(artesano_id):
         "descripcion_artesania":comentario,
         "nombre":nombre,
         "mail":mail,
-        "numero":numero
+        "numero":numero,
+        "imagenes":imagenes
     }
     return data

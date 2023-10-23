@@ -1,5 +1,6 @@
 from utils.artesano import Artesano
 from database.regiones import REGIONES
+import filetype
 ARTESANIAS = ["mármol", "madera", "cerámica", "mimbre", "metal", "cuero", "telas", "joyas", "otro"]
 import re
 
@@ -46,4 +47,31 @@ def validate_entry_artesano(val: Artesano):
     is_val = is_val and validate_comuna(val.comuna)
     if (val.numero != ""):
         is_val = is_val and validate_phone(val.numero)
+    return is_val
+
+
+def validate_files_artesano(conf_img):
+    ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif"}
+    ALLOWED_MIMETYPES = {"image/jpeg", "image/png", "image/gif"}
+
+    # check if a file was submitted
+    is_val = True
+
+    is_val = is_val and (1<=len(conf_img)<=3)
+
+    for img in conf_img:
+        if img is None:
+            return False
+
+        # check if the browser submitted an empty file
+        if img.filename == "":
+            return False
+    
+    # check file extension
+        ftype_guess = filetype.guess(img)
+        if ftype_guess.extension not in ALLOWED_EXTENSIONS:
+            return False
+    # check mimetype
+        if ftype_guess.mime not in ALLOWED_MIMETYPES:
+            return False
     return is_val

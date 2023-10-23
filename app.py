@@ -1,9 +1,10 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
-from utils.validations import validate_entry_artesano#, validate_files_artesano
+from utils.validations import validate_entry_artesano, validate_files_artesano
 from database import db
 from utils.artesano import Artesano
 app = Flask(__name__)
+UPLOAD_FOLDER = 'static/uploads'
 
 @app.route("/")
 def menu():
@@ -24,13 +25,14 @@ def agregar_artesano():
         region = data["region"]
         comuna = data["comuna"]
 
+        images = request.files.getlist('files[]')
+        
         entry_artesano = Artesano(name=nombre, mail=email, numero=number,
                                    comentario=comentarios, region=region,
                                    comuna=comuna, artesanias=artesania_values)
-        print(data["mynumber"], type(number))
-        #files_artesano = request.files
-        if validate_entry_artesano(entry_artesano): #and validate_files_artesano():
-            if db.insert_artesano(entry_artesano):
+        print(images)
+        if validate_entry_artesano(entry_artesano) and validate_files_artesano(images):
+            if db.insert_artesano(entry_artesano, images):
                 print("Todo OK")
                 return redirect(url_for("agregar_artesano", error=error))
             error = "Error insertando a base de datos, verifique que cumpla!"

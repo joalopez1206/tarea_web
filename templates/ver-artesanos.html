@@ -32,7 +32,11 @@ href="{{ url_for('static', filename='css/ver_artesano.css')}}">
                         {% endfor %}
                     </ul>
                 </td>
-                <td><img src="" alt="foto de {{artesano.nombre}}"></td>
+                <td>
+                    {% for imagen in artesano.imagenes %}
+                        <img src="{{imagen}}" alt="foto de {{artesano.nombre}}">
+                    {% endfor %}
+                </td>
             </tr>
         {% endfor %}
         {% endif %}
