@@ -5,7 +5,7 @@ Esta es la entrega de la tarea 2.
 Es un prototipo de pagina para los juegos paramericanos 2023 santiago con una base de datos
 
 Dentro de cada carpeta estan todos los recursos que se usan
-- __utils__ tiene utilidades para la app de flask
+- __utils__ tiene utilidades para la app de flask (validaciones)
 - __templates__ tiene los templates de html
 - __static__ tiene los recursos estaticos usados (js, img, css)
 
