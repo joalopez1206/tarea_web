@@ -23,6 +23,9 @@ href="{{ url_for('static', filename='css/index.css')}}">
         <div class="botones">
             <a href="{{ url_for('ver_hinchas', offset=0) }}"><button type="button">Ver Hinchas</button></a>
         </div>
+        <div class="botones">
+            <a href="{{ url_for('stats') }}"><button type="button">Ver Estadisticas</button></a>
+        </div>
         {% if error %}
         <div class="error-msg">
             {{error}}

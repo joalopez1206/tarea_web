@@ -260,3 +260,37 @@ def get_hincha_by_id(hincha_id):
         "modo_transporte":modo_transporte
     }
     return data
+
+def get_number_of_hinchas_grouped_by_deporte():
+    conn = get_conn()
+    cursor = conn.cursor()
+
+    QUERY = """
+    SELECT deporte.nombre, COUNT(hincha_deporte.hincha_id) AS cantidad
+    FROM hincha_deporte, deporte
+    WHERE deporte.id=hincha_deporte.deporte_id 
+    GROUP BY deporte.nombre
+    """
+
+    cursor.execute(QUERY)
+
+    value = cursor.fetchall()
+    
+    return [{"name":name, "cantidad": cantidad } for name, cantidad in value]
+
+def get_artesanos_grouped_by_artesania():
+    conn = get_conn()
+    cursor = conn.cursor()
+
+    QUERY = """
+    SELECT tipo_artesania.nombre, COUNT(artesano_tipo.artesano_id) AS cantidad
+    FROM artesano_tipo, tipo_artesania
+    WHERE tipo_artesania.id=artesano_tipo.tipo_artesania_id
+    GROUP BY tipo_artesania.nombre
+    """
+
+    cursor.execute(QUERY)
+
+    value = cursor.fetchall()
+    
+    return [{"name":name, "cantidad": cantidad } for name, cantidad in value]

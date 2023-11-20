@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Stats{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="{{url_for('static',filename='css/stats.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="stats-container">
+    <div id="container-hinchas"></div>
+    <div id="container-artesanos"></div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="{{url_for('static',filename='js/stats.js')}}"></script>
+{% endblock %}

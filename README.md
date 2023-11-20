@@ -1,8 +1,8 @@
-# Tarea 2
+# Tarea 3
 
 > autor: joalopez1206
 
-Esta es la entrega de la tarea 2. 
+Esta es la entrega de la tarea 3. 
 Es un prototipo de pagina para los juegos paramericanos 2023 santiago con una base de datos
 
 Dentro de cada carpeta estan todos los recursos que se usan
@@ -11,7 +11,9 @@ Dentro de cada carpeta estan todos los recursos que se usan
 - __static__ tiene los recursos estaticos usados (js, img, css)
 - __database__ tiene las funciones de mysql para interactuar con la base de datos
 
-Notar que la conexion a la base de datos es usando las siguientes variables:
+Notar que la conexion a la base de datos es usando las siguientes variables (no cambie lo de tarea2 por comodidad):
+
+__IMPORTANTE__ : __Si es que no funciona logearse a la base de datos, intente dejando en una terminal la base de datos prendida y probar la aplicacion denuevo.__
 
 ```py
 DB_NAME = "tarea2"
@@ -40,8 +42,7 @@ python3 app.py
 
 ## Estado y Observaciones del codigo
 
-Se pueden registar artesanos y se pueden ver en la vista de ver-artesanos. ver artesanos tambien permite cambiar la pagina si hay muchos artesanos. y se puede ver la informacion de cada artesano.
+Incluyendo lo de la tarea 2, ahora se puede registrar y ver hinchas.
 
-Las imagenes de guardan en la carpeta static! tambien lo que falta en el codigo es poder encoger las imagenes que se suben, para que se vean mejor en "ver-artesanos".
-
-Por el momento solo se han subido imagenes de baja calidad!
+Tambien se añadio la nueva funcionalidad de graficos, los cuales son los archivos stats.(html|js|css) los cuales son para
+realizar los graficas, los cuales son hechos por la libreria Highcharts y usando AJAX con la api `fetch` para cargar los datos.

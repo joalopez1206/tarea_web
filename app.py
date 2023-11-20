@@ -1,12 +1,15 @@
-from flask import Flask, request, render_template, redirect, url_for, session
+from flask import Flask, request, render_template, redirect, url_for, jsonify
+from flask_cors import cross_origin
 from werkzeug.utils import secure_filename
 from utils.validations import validate_entry_artesano, validate_files_artesano, validate_entry_hincha
 from database import db
 from utils.artesano import Artesano
 from utils.hincha import Hincha
+
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
 ALL_GOOD = "Se ha registrado exitosamente!"
+
 @app.route("/")
 def menu():
     error = request.args.get('error', None)
@@ -95,8 +98,21 @@ def ver_hinchas(offset):
         data = db.get_hinchas(offset=offset)
         return render_template("ver-hinchas.html", hinchas=data, offset=offset)
 
+@app.route("/get_hinchas_por_deporte", methods=["GET"])
+@cross_origin(origin="*", supports_credentials=True)
+def get_hinchas_por_deporte():
+    data=db.get_number_of_hinchas_grouped_by_deporte()
+    return jsonify({"status" :"ok", "data":data})
 
+@app.route("/get_artesanos_por_artesania", methods=["GET"])
+@cross_origin(origin="*", supports_credentials=True)
+def get_artesanos_por_artesania():
+    data=db.get_artesanos_grouped_by_artesania()
+    return jsonify({"status" :"ok", "data":data})
 
+@app.route("/stats", methods = ["GET"])
+def stats():
+    return render_template("stats.html")
 
 if __name__ == "__main__":
     app.run(debug=True)
