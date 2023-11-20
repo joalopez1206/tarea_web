@@ -1,12 +1,12 @@
 from dataclasses import dataclass
 
 @dataclass
-class Artesano:
+class Hincha:
     name :str
     mail :str
     numero :str
     region :str
     comuna :str
-    artesanias :list[str]
+    deportes :list[str]
     comentario : str
-    trasnporte :str
+    modo_transporte :str

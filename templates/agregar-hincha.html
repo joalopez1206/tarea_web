@@ -13,6 +13,9 @@ href="{{ url_for('static', filename='css/hincha.css')}}">
         <h2 id="val-msg"></h2>
         <ul id="val-list"></ul>
     </div>
+    {% if error%}
+    <p>{{error}}</p>
+    {% endif %}
     <div class="container">
         <form class="formulario" method= "post" enctype="multipart/form-data" id="reg-hincha">
 
@@ -61,12 +64,10 @@ href="{{ url_for('static', filename='css/hincha.css')}}">
                 <label>Medio de transporte.</label> <br>
 
                 <div id="transport-checkbox">
-                    <input type="checkbox" name="transporte[]" id="privado" value="privado">
+                    <input type="checkbox" name="transporte[]" id="privado" value="particular">
                     <label for="privado">Privado</label> <br>
-                    <input type="checkbox" name="transporte[]" id="publico" value="publico">
+                    <input type="checkbox" name="transporte[]" id="publico" value="locomoción pública">
                     <label for="publico">Transporte publico</label> <br>
-                    <input type="checkbox" name="transporte[]" id="bicicleta" value="bicicleta">
-                    <label for="bicicleta">Bicicleta</label>
                 </div>
 
             </div>

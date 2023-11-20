@@ -1,55 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="../css/hincha.css">
-        <title>Registro Hincha</title>
-    </head>
-    <body>
-        <a href="ver-hinchas.html"><button id="backbutton">Volver a informacion</button></a>
+{% extends 'base.html' %}
+
+{% block title %}Informacion Hincha{% endblock %}
+
+{% block css %} 
+<link rel="stylesheet" 
+type="text/css" 
+href="{{ url_for('static', filename='css/hincha.css')}}">
+{% endblock %}
+{% block content %}
+    {% if hincha %}
+        <a href="{{url_for('ver_hinchas', offset=0)}}"><button id="backbutton">Volver a informacion</button></a>
 
         <div class="container" style="display: flex; flex-direction: column; gap: 15px;">
 
                 <div id="deportes-que-tiene" class="input_usuario">
                     los deportes que hace son: <br>
-                    basquetball, ciclismo, futbol
+                    {% for tipo in hincha.tipo_deportes %}
+                    <li>{{tipo}}</li>
+                    {% endfor %}
                 </div>
-
+                <hr>
                 <div id = "region-menu" class="input_usuario">
                     la region desde donde participa es: <br>
-                    Coquimbo
+                    {{hincha.region}}
                 </div>
-
+                <hr>
                 <div id = "comuna-menu" class="input_usuario">
                     la comuna desde donde participa es: <br>
-                    La Serena
+                    {{hincha.comuna}}
                 </div>
-
+                <hr>
                 <div id = "transporte-menu" class="input_usuario">
                     los medios de transporte que usa es: <br>
-                    Publico
+                    {{hincha.modo_transporte}}
                 </div>
-
+                <hr>
                 <div id="nombre-menu" class="input_usuario">
                     Su nombre es: <br>
-                    Pedro
+                    {{hincha.nombre}}
                 </div>
-
+                <hr>
                 <div id="mail-menu" class="input_usuario"> 
                     Su correo es: <br>
-                    pedro@xd.cl
+                    {{hincha.mail}}
                 </div>
-
+                <hr>
                 <div id ="number-menu" class="input_usuario">
+                    {% if hincha.numero %}
                     Su numero de telefono es: <br>
-                    1232456677
+                    {{hincha.numero}}
+                    {% else %}
+                    No tiene numero de telefono
+                    {% endif %}
                 </div>
-
+                <hr>
                 <div id="comentarios-menu" class="input_usuario">
                     Comentarios extra: <br>
+                    {{hincha.comentarios}}
                 </div>
-
         </div>
-    </body>
-</html>
+        {% else %}
+        <p>Este hincha no esta registrado!</p>
+        {% endif %}
+    {% endblock %}

@@ -17,3 +17,8 @@
     padding: 0.5rem;
     justify-content: center;
 }
+
+.error-msg {
+    color: red;
+    font-weight: bold;
+}

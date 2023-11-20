@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}Registro Artesano{% endblock %}
+{% block title %}Registro Hincha{% endblock %}
 
 {% block css %} 
 <link rel="stylesheet" 
@@ -19,23 +19,25 @@ href="{{ url_for('static', filename='css/ver-hincha.css')}}">
             <th>Modo Transporte</th>
             <th>Numero celular</th>
         </tr>
-        <script>
-            let hinchas = [
-                {"nombre":"pedro", "comuna":"la serena", "deportes":["basquet","bici","futbol"], "transporte":["privado"], "Numero":"1232456677"},
-                {"nombre":"juan", "comuna":"coquimbo", "deportes":["basquet","bici","futbol"], "transporte":["publico"], "Numero":"1230102317"},
-                {"nombre":"diego", "comuna":"Maipu", "deportes":["basquet","bici","futbol"], "transporte":["privado"], "Numero":"1291293912"},
-                {"nombre":"pablo", "comuna":"paihuano", "deportes":["basquet","bici","futbol"], "transporte":["publico"], "Numero":"0012389277"},
-                {"nombre":"gilberto", "comuna":"ovalle", "deportes":["basquet","bici","futbol"], "transporte":["privado"], "Numero":"9912838123"},
-        ]
-            for(const hincha of hinchas){
-                document.write("<tr>");
-                document.write("<td><a href='informacion-hincha.html'>"+hincha.nombre+"</a></td>");
-                document.write("<td>"+hincha.comuna+"</td>");
-                document.write("<td>"+hincha.deportes+"</td>");
-                document.write("<td>"+hincha.transporte+"</td>");
-                document.write("<td>"+hincha.Numero+"</td>");
-                document.write("</tr>");
-            }
-        </script>
+        {% if hinchas %}
+            {% for hincha in hinchas %}
+                <tr>
+                    <td><a href="{{url_for('informacion_hinchas', hincha_id=hincha.hincha_id)}}">{{hincha.nombre}}</a></td>
+                    <td>{{hincha.nombre_comuna}}</td>
+                    <td>
+                        <ul>
+                            {% for tipo in hincha.tipo_deportes %}
+                            <li> {{tipo}}</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>{{hincha.tipo_transporte}}</td>
+                    <td>{{hincha.numero}}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
     </table>
+    <a href="{{url_for('ver_hinchas', offset=offset+5)}}">
+        <button id = "backbutton"> Siguientes 5 Hinchas</button>
+    </a>
 {% endblock %}

@@ -1,8 +1,20 @@
 from utils.artesano import Artesano
+from utils.hincha import Hincha
 from database.regiones import REGIONES
+from database.db import check_deportes
 import filetype
 ARTESANIAS = ["mármol", "madera", "cerámica", "mimbre", "metal", "cuero", "telas", "joyas", "otro"]
+TRANSPORTES = ["particular","locomoción pública"]
 import re
+
+def validate_deportes(ls: list[str]):
+    is_val = (1 <= len(ls) <= 3)
+    for deporte in ls:
+        is_val = is_val and check_deportes(deporte)
+    return is_val
+
+def validate_transporte(ls: str):
+    return ls in TRANSPORTES
 
 def validate_comuna(s: str):
     if s:
@@ -69,9 +81,21 @@ def validate_files_artesano(conf_img):
     
     # check file extension
         ftype_guess = filetype.guess(img)
-        if ftype_guess.extension not in ALLOWED_EXTENSIONS:
+        if ftype_guess == None  or ftype_guess.extension not in ALLOWED_EXTENSIONS:
             return False
     # check mimetype
         if ftype_guess.mime not in ALLOWED_MIMETYPES:
             return False
+    return is_val
+
+def validate_entry_hincha(val: Hincha):
+    is_val = True
+    is_val = is_val and validate_email(val.mail)
+    is_val = is_val and validate_name(val.name)
+    is_val = is_val and validate_region(val.region)
+    is_val = is_val and validate_comuna(val.comuna)
+    is_val = is_val and validate_deportes(val.deportes)
+    is_val = is_val and validate_transporte(val.modo_transporte)
+    if (val.numero != ""):
+        is_val = is_val and validate_phone(val.numero)
     return is_val

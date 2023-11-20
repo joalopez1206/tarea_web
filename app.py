@@ -1,18 +1,20 @@
 from flask import Flask, request, render_template, redirect, url_for, session
 from werkzeug.utils import secure_filename
-from utils.validations import validate_entry_artesano, validate_files_artesano
+from utils.validations import validate_entry_artesano, validate_files_artesano, validate_entry_hincha
 from database import db
 from utils.artesano import Artesano
+from utils.hincha import Hincha
 app = Flask(__name__)
 UPLOAD_FOLDER = 'static/uploads'
-
+ALL_GOOD = "Se ha registrado exitosamente!"
 @app.route("/")
 def menu():
-    return render_template("index.html")
+    error = request.args.get('error', None)
+    return render_template("index.html", error=error)
 
 @app.route("/agregar_artesano",methods=["GET", "POST"])
 def agregar_artesano():
-    error = None
+    error = request.args.get('error', None)
     if request.method == "GET":
         return render_template("agregar-artesano.html", error=error)
     elif request.method == "POST":
@@ -33,20 +35,42 @@ def agregar_artesano():
         print(images)
         if validate_entry_artesano(entry_artesano) and validate_files_artesano(images):
             if db.insert_artesano(entry_artesano, images):
-                print("Todo OK")
-                return redirect(url_for("agregar_artesano", error=error))
+                print("Todo OK, artesano registrado!")
+                error = ALL_GOOD
+                return redirect(url_for("menu", error=error))
             error = "Error insertando a base de datos, verifique que cumpla!"
         else:
             error = "Error en la validacion de los datos. Verifique que cumplen los requisitos"
-        return redirect(url_for("agregar_artesano", error=error))
+        return render_template("agregar-artesano.html", error=error)
     
 
 @app.route("/agregar_hincha",methods=["GET", "POST"])
 def agregar_hincha():
+    error = request.args.get('error', None)
     if request.method == "GET":
-        return render_template("agregar-hincha.html")
+        return render_template("agregar-hincha.html", error=error)
     elif request.method == "POST":
-        return "<p>NO PASA NA</p>"
+        data = request.form
+        deportes_values = data.getlist('deportes[]')
+        nombre = data["nombre"]
+        email = data["myemail"]
+        number = data["mynumber"]
+        comentarios = data["comentarios"]
+        region = data["region"]
+        comuna = data["comuna"]
+        transportes = data["transporte[]"]
+
+        entry_hincha = Hincha(nombre,email,number,region,comuna,deportes_values,comentarios, transportes)
+
+        print(data)
+        if validate_entry_hincha(entry_hincha):
+            if db.insert_hincha(entry_hincha):
+                error = ALL_GOOD
+                return redirect(url_for("menu", error=error))
+            error = "Error insertado en la base de datos"
+        else:
+            error = "Error en la validacion de los datos. Verifique que cumplen los requisitos"
+        return render_template("agregar-hincha.html", error = error)
 
 @app.route("/ver_artesanos/<int:offset>",methods=["GET"])
 def ver_artesanos(offset):
@@ -59,13 +83,18 @@ def informacion_artesanos(artesano_id):
     artesano = db.get_artesano_by_id(artesano_id)
     return render_template("informacion-artesanos.html",artesano=artesano)
 
+@app.route("/informacion_hinchas/<int:hincha_id>", methods=["GET"])
+def informacion_hinchas(hincha_id):
+    artesano = db.get_hincha_by_id(hincha_id)
+    return render_template("informacion-hincha.html",hincha=artesano)
 
-@app.route("/ver_hinchas",methods=["GET"])
-def ver_hinchas():
+
+@app.route("/ver_hinchas/<int:offset>",methods=["GET"])
+def ver_hinchas(offset):
     if request.method == "GET":
-        return render_template("ver-hinchas.html")
-    elif request.method == "POST":
-        return "<p>NO PASA NA</p>"
+        data = db.get_hinchas(offset=offset)
+        return render_template("ver-hinchas.html", hinchas=data, offset=offset)
+
 
 
 

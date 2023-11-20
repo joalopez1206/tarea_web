@@ -464,8 +464,19 @@ const change_comunas = () => {
     });
 }
 
-let region_select = document.getElementById("region")
-region_select.addEventListener("change", change_comunas)
+//let boxes = document.querySelectorAll("input[name=trasnporte[]]");
+let boxes = document.querySelectorAll("#privado, #publico");
+
+const tick = (e) => {
+    let state = e.target.checked; // save state of changed checkbox
+    boxes.forEach(b => b.checked = false); // clear all checkboxes
+    e.target.checked = state; // restore state of changed checkbox
+}
+
+boxes.forEach(b => b.addEventListener("change", tick));
+
+let region_select = document.getElementById("region");
+region_select.addEventListener("change", change_comunas);
 
 const validate_deportes = (deportes) => {
     return deportes.length >= 1&& deportes.length <=3
@@ -499,11 +510,12 @@ const validate_mail = (mail) => {
 
 const validate_transport = (list_transport) => {
     if(!list_transport) return false;
-    return list_transport.length > 0;
+    return list_transport.length == 1;
 }
 
 
 let validate_form = () => {
+    let myform = document.forms["reg-hincha"];
     let name = document.getElementById("nombre").value;
     let mail = document.getElementById("myemail").value;
     let comuna = document.getElementById("region").value
@@ -576,18 +588,9 @@ let validate_form = () => {
         validation_message_elem.innerText = "Los siguientes campos son invalidos:"
         validation_box.hidden = false;
     } else {
+        validation_box.hidden = true;
         if (confirm("¿Confirma el registro de este hincha?")){
-            //aqui usaria un myform.submit pero como es estatico solo redirecionare al index
-            let msg = document.getElementById("msg-ready")
-            msg.hidden = false;
-            let msg_text = document.createElement("h2")
-            msg_text.innerText = "Hemos recibido el registro del hincha. Muchas gracias. Espere un momento para ir al menu."
-            msg.append(msg_text)
-            scrollBy(0,200)
-            setTimeout(() => {
-                window.location.href = "index.html"
-            }, 3500);
-
+            myform.submit();
         }else{
             return;
         }
