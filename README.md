@@ -45,4 +45,4 @@ python3 app.py
 Incluyendo lo de la tarea 2, ahora se puede registrar y ver hinchas.
 
 Tambien se añadio la nueva funcionalidad de graficos, los cuales son los archivos stats.(html|js|css) los cuales son para
-realizar los graficas, los cuales son hechos por la libreria Highcharts y usando AJAX con la api `fetch` para cargar los datos.
+realizar las graficas, los cuales son hechos por la libreria Highcharts y usando AJAX con la api `fetch` para cargar los datos.
